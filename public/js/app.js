@@ -1956,6 +1956,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1964,17 +1992,88 @@ __webpack_require__.r(__webpack_exports__);
         name: '',
         price: '',
         description: ''
-      }
+      },
+      editProductActive: false
     };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('/producto').then(function (res) {
+      _this.products = res.data;
+    });
   },
   methods: {
     agregar: function agregar() {
-      // console.log(this.tarea.name , this.tarea.description)
+      var _this2 = this;
+
+      //  console.log(this.product.name , this.product.price);
+      if (this.product.name.trim() === '' || this.product.price.trim() === '' || this.product.description.trim() === '') {
+        alert('Debes completar todos los campos antes de guardar');
+        return;
+      }
+
       var params = {
-        name: this.tarea.name,
-        description: this.tarea.description
+        name: this.product.name,
+        price: this.product.price,
+        description: this.product.description
       };
-      axios.post('/producto');
+      this.product.name = '';
+      this.product.price = '';
+      this.product.description = '';
+      axios.post('/producto', params).then(function (res) //console.log(res.data))
+      {
+        _this2.products.push(res.data);
+      });
+    },
+    editForm: function editForm(item) {
+      this.editProductActive = true;
+      this.product.name = item.name;
+      this.product.price = item.price;
+      this.product.description = item.description;
+      this.product.id = item.id;
+    },
+    editProduct: function editProduct(item) {
+      var _this3 = this;
+
+      var params = {
+        name: item.name,
+        price: item.price,
+        description: item.description
+      };
+      axios.put("/producto/".concat(item.id), params).then(function (res) {
+        _this3.editProductActive = false;
+
+        var index = _this3.products.findIndex(function (indexProduct) {
+          return indexProduct.id === res.data.id;
+        });
+
+        _this3.products.splice(index, 1, res.data);
+
+        _this3.product = {
+          name: '',
+          price: '',
+          description: ''
+        };
+        axios.get('/producto').then(function (res) {
+          _this3.products = res.data;
+        });
+      });
+    },
+    deleteProduct: function deleteProduct(item, index) {
+      var _this4 = this;
+
+      axios["delete"]("/producto/".concat(item.id)).then(function () {
+        _this4.products.splice(index, 1);
+      });
+    },
+    cancelEdit: function cancelEdit() {
+      this.editProductActive = false;
+      this.product = {
+        name: '',
+        price: '',
+        description: ''
+      };
     }
   }
 });
@@ -37574,14 +37673,10 @@ var staticRenderFns = [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-md-8" }, [
           _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Este el titulo")
-            ]),
+            _c("div", { staticClass: "card-header" }, [_vm._v("BIENVENIDO A")]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    esto es un componente.\n                "
-              )
+              _vm._v("\n                    VENAL\n                ")
             ])
           ])
         ])
@@ -37611,90 +37706,237 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h3", [_vm._v("Agregar Productos")]),
+    _vm.editProductActive
+      ? _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.editProduct(_vm.product)
+              }
+            }
+          },
+          [
+            _c("h3", [_vm._v("Editar Productos")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.product.name,
+                  expression: "product.name"
+                }
+              ],
+              staticClass: "form-control mb-2",
+              attrs: { type: "text", placeholder: "Nombre" },
+              domProps: { value: _vm.product.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.product, "name", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.product.price,
+                  expression: "product.price"
+                }
+              ],
+              staticClass: "form-control mb-2",
+              attrs: { type: "number", placeholder: "Price" },
+              domProps: { value: _vm.product.price },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.product, "price", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.product.description,
+                  expression: "product.description"
+                }
+              ],
+              staticClass: "form-control mb-2",
+              attrs: { type: "text", placeholder: "Descripcion" },
+              domProps: { value: _vm.product.description },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.product, "description", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-success", attrs: { type: "submit" } },
+              [_vm._v("Guardar")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                attrs: { type: "submit" },
+                on: {
+                  click: function($event) {
+                    return _vm.cancelEdit()
+                  }
+                }
+              },
+              [_vm._v("Cancelar")]
+            )
+          ]
+        )
+      : _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.agregar()
+              }
+            }
+          },
+          [
+            _c("h3", [_vm._v("Agregar Productos")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.product.name,
+                  expression: "product.name"
+                }
+              ],
+              staticClass: "form-control mb-2",
+              attrs: { type: "text", placeholder: "Nombre" },
+              domProps: { value: _vm.product.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.product, "name", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.product.price,
+                  expression: "product.price"
+                }
+              ],
+              staticClass: "form-control mb-2",
+              attrs: { type: "number", placeholder: "Price" },
+              domProps: { value: _vm.product.price },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.product, "price", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.product.description,
+                  expression: "product.description"
+                }
+              ],
+              staticClass: "form-control mb-2",
+              attrs: { type: "text", placeholder: "Descripcion" },
+              domProps: { value: _vm.product.description },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.product, "description", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v("Agregar")]
+            )
+          ]
+        ),
+    _vm._v(" "),
+    _c("hr", { staticClass: "mt-3" }),
+    _vm._v(" "),
+    _c("h3", [_vm._v("Listado de Notas")]),
     _vm._v(" "),
     _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-          }
-        }
-      },
-      [
-        _c("input", {
-          directives: [
+      "ul",
+      { staticClass: "list-group my-2" },
+      _vm._l(_vm.products, function(item, index) {
+        return _c("li", { key: index, staticClass: "list-group-item" }, [
+          _c("p", [_vm._v("Nombre: " + _vm._s(item.name))]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Precio: " + _vm._s(item.price))]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Descripcion: " + _vm._s(item.description))]),
+          _vm._v(" "),
+          _c(
+            "button",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.product.name,
-              expression: "product.name"
-            }
-          ],
-          staticClass: "form-control mb-2",
-          attrs: { type: "text", placeholder: "Nombre" },
-          domProps: { value: _vm.product.name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+              staticClass: "btn btn-danger btn-sm",
+              on: {
+                click: function($event) {
+                  return _vm.deleteProduct(item, index)
+                }
               }
-              _vm.$set(_vm.product, "name", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
+            },
+            [_vm._v("Eliminar")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.product.price,
-              expression: "product.price"
-            }
-          ],
-          staticClass: "form-control mb-2",
-          attrs: { type: "number", placeholder: "Price" },
-          domProps: { value: _vm.product.price },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+              staticClass: "btn btn-warning btn-sm",
+              on: {
+                click: function($event) {
+                  return _vm.editForm(item)
+                }
               }
-              _vm.$set(_vm.product, "price", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.product.description,
-              expression: "product.description"
-            }
-          ],
-          staticClass: "form-control mb-2",
-          attrs: { type: "text", placeholder: "Descripcion" },
-          domProps: { value: _vm.product.description },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.product, "description", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Agregar")]
-        )
-      ]
+            },
+            [_vm._v("Editar")]
+          )
+        ])
+      }),
+      0
     )
   ])
 }
