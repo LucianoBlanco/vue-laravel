@@ -18,6 +18,8 @@ class CreateSalesTable extends Migration
             $table->integer('valueUnity');
             $table->integer('total');
             $table->date('fetch');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
