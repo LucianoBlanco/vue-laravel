@@ -21,5 +21,7 @@ Auth::routes();
 
 Route::resource('/producto', 'ProductController')->middleware('auth');
 Route::resource('/provider', 'ProviderController')->middleware('auth');
+Route::resource('/client', 'ClientController')->middleware('auth');
+Route::resource('/sale', 'SaleController')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');

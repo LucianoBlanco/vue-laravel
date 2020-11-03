@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Client;
+use App\Sale;
 
-class ClientController extends Controller
+class SaleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            return Client::where('user_id', auth()->id())->get();
+            return Sale::where('user_id', auth()->id())->get();
         }else{
-            return view('client');
+            return view('sale');
         }
     }
 
@@ -39,14 +39,14 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $client = new Client();
-        $client->name = $request->name;
-        $client->surname = $request->surname;
-        $client->dni = $request->dni;
-        $client->user_id = auth()->id();
-        $client->save();
+        $sale = new Sale();
+        $sale->valueUnity = $request->valueUnity;
+        $sale->total = $request->total;
+        $sale->fetch = $request->fetch;
+        $sale->user_id = auth()->id();
+        $sale->save();
 
-        return $client;
+        return $sale;
     }
 
     /**
@@ -80,12 +80,12 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $client = Client::find($id);
-        $client->name = $request->name;
-        $client->surname = $request->surname;
-        $client->dni = $request->dni;
-        $client->save();
-        return $client;
+        $sale = Sale::find($id);
+        $sale->valueUnity = $request->valueUnity;
+        $sale->total = $request->total;
+        $sale->fetch = $request->fetch;
+        $sale->save();
+        return $sale;
     }
 
     /**
@@ -96,7 +96,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $client = Client::find($id);
-        $client->delete();
+        $sale = Sale::find($id);
+        $sale->delete();
     }
 }
