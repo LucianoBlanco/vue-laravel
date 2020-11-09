@@ -13,15 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Auth::routes();
+// Auth::routes();
 
-Route::resource('/producto', 'ProductController')->middleware('auth');
-Route::resource('/provider', 'ProviderController')->middleware('auth');
-Route::resource('/client', 'ClientController')->middleware('auth');
-Route::resource('/sale', 'SaleController')->middleware('auth');
+// Route::resource('/producto', 'ProductController')->middleware('auth');
+// Route::resource('/provider', 'ProviderController')->middleware('auth');
+// Route::resource('/client', 'ClientController')->middleware('auth');
+// Route::resource('/sale', 'SaleController')->middleware('auth');
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
