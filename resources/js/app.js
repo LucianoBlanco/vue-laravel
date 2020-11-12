@@ -2,7 +2,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 //enrutamiento con vue-router
- Vue.component('post-component', require('./components/PostComponent.vue').default);
+Vue.component('post-component', require('./components/PostComponent.vue').default);
 
 //componentes
 Vue.component('welcome-component', require('./components/WelcomeComponent.vue').default);

@@ -2099,6 +2099,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2138,7 +2143,7 @@ __webpack_require__.r(__webpack_exports__);
       this.product.description = '';
       axios.post('/producto', params).then(function (res) //console.log(res.data))
       {
-        _this2.products.push(res.data);
+        _this2.products.push(res.data.product.data);
       });
     },
     editForm: function editForm(item) {
@@ -38367,7 +38372,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "col-md-6" }, [
     _vm.editProductActive
       ? _c(
           "form",
@@ -38558,48 +38563,55 @@ var render = function() {
     _vm._v(" "),
     _c("hr", { staticClass: "mt-3" }),
     _vm._v(" "),
-    _c("h3", [_vm._v("Listado de Productos")]),
-    _vm._v(" "),
-    _c(
-      "ul",
-      { staticClass: "list-group my-2" },
-      _vm._l(_vm.products, function(item, index) {
-        return _c("li", { key: index, staticClass: "list-group-item" }, [
-          _c("p", [_vm._v("Nombre: " + _vm._s(item.name))]),
+    _c("table", [
+      _c(
+        "thead",
+        [
+          _c("h3", [_vm._v("Listado de Productos")]),
           _vm._v(" "),
-          _c("p", [_vm._v("Precio: " + _vm._s(item.price))]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Descripcion: " + _vm._s(item.description))]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-danger btn-sm",
-              on: {
-                click: function($event) {
-                  return _vm.deleteProduct(item, index)
-                }
-              }
-            },
-            [_vm._v("Eliminar")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-warning btn-sm",
-              on: {
-                click: function($event) {
-                  return _vm.editForm(item)
-                }
-              }
-            },
-            [_vm._v("Editar")]
-          )
-        ])
-      }),
-      0
-    )
+          _vm._l(_vm.products, function(item, index) {
+            return _c(
+              "tr",
+              { key: index, staticClass: "list-group-item my-2" },
+              [
+                _c("th", [_vm._v("Nombre: " + _vm._s(item.name) + " ______")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Precio: " + _vm._s(item.price) + " _____")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Descripcion: " + _vm._s(item.description))]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger btn-sm",
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteProduct(item, index)
+                      }
+                    }
+                  },
+                  [_vm._v("Eliminar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-warning btn-sm",
+                    on: {
+                      click: function($event) {
+                        return _vm.editForm(item)
+                      }
+                    }
+                  },
+                  [_vm._v("Editar")]
+                )
+              ]
+            )
+          })
+        ],
+        2
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -39068,7 +39080,7 @@ var render = function() {
                     _c(
                       "li",
                       [
-                        _c("router-link", { attrs: { to: { name: "home" } } }, [
+                        _c("router-link", { attrs: { to: "/Home" } }, [
                           _vm._v("Inicio")
                         ])
                       ],
@@ -39078,11 +39090,9 @@ var render = function() {
                     _c(
                       "li",
                       [
-                        _c(
-                          "router-link",
-                          { attrs: { to: { name: "product" } } },
-                          [_vm._v("Productos")]
-                        )
+                        _c("router-link", { attrs: { to: "/Product" } }, [
+                          _vm._v("Productos")
+                        ])
                       ],
                       1
                     )
@@ -39112,7 +39122,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-8 col-md-7 py-4" }, [
-      _c("h4", { staticClass: "text-white" }, [_vm._v("Sleccione su servicio")])
+      _c("h4", { staticClass: "text-white" }, [
+        _vm._v("Seleccione su servicio")
+      ])
     ])
   },
   function() {
@@ -39306,7 +39318,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._v("\n    @extends('layouts.app')\n\n    @section('content')\n    "),
     _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-md-12" }, [
@@ -39324,8 +39335,7 @@ var render = function() {
           ])
         ])
       ])
-    ]),
-    _vm._v("\n    @endsection\n")
+    ])
   ])
 }
 var staticRenderFns = []
@@ -55045,16 +55055,16 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   route: [{
     path: '/',
-    name: 'home',
-    component: __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue")
+    name: 'Home',
+    component: __webpack_require__(/*! ./views/Home.vue */ "./resources/js/views/Home.vue")
   }, {
     path: '/product',
-    name: 'product',
-    component: __webpack_require__(/*! ./views/Product */ "./resources/js/views/Product.vue")
+    name: 'Product',
+    component: __webpack_require__(/*! ./views/Product.vue */ "./resources/js/views/Product.vue")
   }, {
     path: ':slug',
-    name: 'post',
-    component: __webpack_require__(/*! ./views/Post */ "./resources/js/views/Post.vue"),
+    name: 'Post',
+    component: __webpack_require__(/*! ./views/Post.vue */ "./resources/js/views/Post.vue"),
     props: true
   }, {
     path: '*',

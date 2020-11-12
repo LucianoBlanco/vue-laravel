@@ -7,18 +7,18 @@ export default new Router({
     route: [
         {
             path: '/',
-            name: 'home',
-            component: require('./views/Home')
+            name: 'Home',
+            component: require('./views/Home.vue')
         },
         {
             path: '/product',
-            name: 'product',
-            component: require('./views/Product')
+            name: 'Product',
+            component: require('./views/Product.vue')
         },
         {
             path: ':slug',
-            name: 'post',
-            component: require('./views/Post'),
+            name: 'Post',
+            component: require('./views/Post.vue'),
             props: true
         },
         {

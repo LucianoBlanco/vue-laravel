@@ -5,19 +5,19 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-md-7 py-4">
-                            <h4 class="text-white">Sleccione su servicio</h4>
+                            <h4 class="text-white">Seleccione su servicio</h4>
                         </div>
                         <div class="col-sm-4 offset-md-1 py-4">
                             <h4 class="text-white">Navegacion</h4>
                             <ul class="list-unstyled">
                                 <li>
-                                    <router-link :to="{name: 'home'}">Inicio</router-link>
+                                    <router-link to="/Home">Inicio</router-link>
                                 </li>
                                 <li>
-                                    <router-link :to="{name: 'product'}">Productos</router-link>
+                                    <router-link to="/Product">Productos</router-link>
                                 </li>
                                 <!-- <li>
-                                    <router-link :to="{name: 'product'}">Productos<router-link>
+                                    <router-link :to="{name: ''}">Productos<router-link>
                                 </li> -->
                             </ul>
                         </div>

@@ -1,44 +1,49 @@
 <template>
-    <div>
-        
+    <div class="col-md-6">
         <form @submit.prevent="editProduct(product)" v-if="editProductActive">
-            <h3>Editar Productos</h3>
-            <input type="text" placeholder="Nombre"
-            class="form-control mb-2" v-model="product.name">
-             <input type="number" placeholder="Price"
-            class="form-control mb-2" v-model="product.price">
-            <input type="text" placeholder="Descripcion"
-            class="form-control mb-2" v-model="product.description">
-            <button class="btn btn-success" type="submit">Guardar</button>
-            <button class="btn btn-danger" type="submit"
-            @click="cancelEdit()">Cancelar</button>
+        <h3>Editar Productos</h3>
+        <input type="text" placeholder="Nombre"
+        class="form-control mb-2" v-model="product.name">
+            <input type="number" placeholder="Price"
+        class="form-control mb-2" v-model="product.price">
+        <input type="text" placeholder="Descripcion"
+        class="form-control mb-2" v-model="product.description">
+        <button class="btn btn-success" type="submit">Guardar</button>
+        <button class="btn btn-danger" type="submit"
+        @click="cancelEdit()">Cancelar</button>
         </form>
 
         <form @submit.prevent="agregar()" v-else>
             <h3>Agregar Productos</h3>
             <input type="text" placeholder="Nombre"
             class="form-control mb-2" v-model="product.name">
-             <input type="number" placeholder="Price"
+            <input type="number" placeholder="Price"
             class="form-control mb-2" v-model="product.price">
             <input type="text" placeholder="Descripcion"
             class="form-control mb-2" v-model="product.description">
             <button class="btn btn-primary" type="submit">Agregar</button>
         </form>
+        
         <hr class="mt-3">
-        <h3>Listado de Productos</h3>
-        <ul class="list-group my-2">
-            <li class="list-group-item"
-            v-for="(item, index) in products" :key="index">
-                <p>Nombre: {{item.name}}</p>
-                <p>Precio: {{item.price}}</p>
-                <p>Descripcion: {{item.description}}</p>
-                <button class="btn btn-danger btn-sm"
-                @click="deleteProduct(item,index)">Eliminar</button>
-                <button class="btn btn-warning btn-sm" 
-                @click="editForm(item)">Editar</button>
-            </li>
-        </ul>
+        <table>
+            <thead>
+                <h3>Listado de Productos</h3>
+                <tr class="list-group-item my-2" v-for="(item, index) in products" :key="index">
+                    <!-- <th class="list-group-item" -->
+                            <th>Nombre: {{item.name}} ______</th>
+                            <th>Precio: {{item.price}} _____</th>
+                            <th>Descripcion: {{item.description}}</th>
+                            <button class="btn btn-danger btn-sm"
+                            @click="deleteProduct(item,index)">Eliminar</button>
+                            <button class="btn btn-warning btn-sm" 
+                            @click="editForm(item)">Editar</button>
+                    <!-- </th> -->
+                </tr>
+            </thead>
+        </table>
+           
     </div>
+    
 </template>
 
 <script>
@@ -74,7 +79,7 @@ export default {
             axios.post('/producto', params)
                 .then((res) => //console.log(res.data))
                 {
-                    this.products.push(res.data)
+                    this.products.push(res.data.product.data)
                 })
         },
         editForm(item){

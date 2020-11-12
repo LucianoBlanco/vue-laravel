@@ -21,6 +21,21 @@ class ProductController extends Controller
         }else{
             return view('home');
         }
+
+        $product = Product::paginate(2);
+
+        // $product = Product::orderBy('id', 'DESC')->paginate(3);
+        // return [
+        //     'paginate' => [
+        //         'total'  => $product->total(),
+        //         'current_page'  => $product->currenPage(),
+        //         'per_page'  => $product->perPage(),
+        //         'last_page'  => $product->lastPage(),
+        //         'form'  => $product->firstItem(),
+        //         'to'  => $produc->lastPage(),
+        //     ],
+        //     'product' => $product
+        // ];
     }
 
     /**

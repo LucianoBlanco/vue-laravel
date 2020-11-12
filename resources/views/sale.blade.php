@@ -7,7 +7,7 @@
             <div class="card">
                 <button style='width:70px; height:35px' >Volver</button>
                 <div class="card-header">
-                    <div class="text-center">Administrador de Ventas</div> 
+                    <div class="text-center" style="background-color: khaki">Administrador de Ventas</div> 
                 </div>
 
                 <div class="card-body">
